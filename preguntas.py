@@ -21,7 +21,22 @@ def pregunta_01():
     214
 
     """
-    return
+    import csv
+
+    with open("data.csv", mode='r', newline='') as file:
+        csv_reader = csv.reader(file)
+        data = "\n".join(["\t".join(row) for row in csv_reader])
+        
+    lines = data.split('\n')
+    suma_total = 0
+
+    for line in lines:
+        if line.strip():
+            parts = line.split('\t')
+            num = int(parts[1])
+            suma_total += num
+
+    return suma_total
 
 
 def pregunta_02():
@@ -39,7 +54,30 @@ def pregunta_02():
     ]
 
     """
-    return
+    import csv
+
+    with open("data.csv", mode='r', newline='') as file:
+        csv_reader = csv.reader(file)
+        data = "\n".join(["\t".join(row) for row in csv_reader])
+
+    letter_counts = {}
+
+    
+    lines = data.strip().split('\n')
+    for line in lines:
+        parts = line.split('\t')
+        letter = parts[0]
+
+        
+        if letter in letter_counts:
+            letter_counts[letter] += 1
+        else:
+            letter_counts[letter] = 1
+
+    
+    respuesta_02= sorted(letter_counts.items())
+
+    return respuesta_02
 
 
 def pregunta_03():
@@ -57,7 +95,31 @@ def pregunta_03():
     ]
 
     """
-    return
+    import csv
+
+    with open("data.csv", mode='r', newline='') as file:
+        csv_reader = csv.reader(file)
+        data = "\n".join(["\t".join(row) for row in csv_reader])
+
+    letter_sums = {}
+
+    lines = data.strip().split('\n')
+    for line in lines:
+        parts = line.split('\t')
+        letter = parts[0]
+        value = int(parts[1])
+
+
+        if letter in letter_sums:
+            letter_sums[letter] += value
+        else:
+            letter_sums[letter] = value
+
+
+    respuesta_03 = sorted(letter_sums.items())       
+    
+    return respuesta_03
+
 
 
 def pregunta_04():
@@ -82,7 +144,30 @@ def pregunta_04():
     ]
 
     """
-    return
+    import csv
+
+    with open("data.csv", mode='r', newline='') as file:
+        csv_reader = csv.reader(file)
+        data = "\n".join(["\t".join(row) for row in csv_reader])
+    
+    meses = {}
+    lineas = data.strip().split('\n')
+
+    for linea in lineas:
+        campos = linea.split('\t')
+        fecha = campos[2]
+        mes = fecha.split('-')[1]
+        if mes in meses:
+            meses[mes] += 1
+        else:
+            meses[mes] = 1
+
+
+    respuesta_04 = list(meses.items())
+
+    respuesta_04.sort(key=lambda x: int(x[0]))
+
+    return respuesta_04
 
 
 def pregunta_05():
@@ -100,7 +185,39 @@ def pregunta_05():
     ]
 
     """
-    return
+
+    import csv
+
+    with open("data.csv", mode='r', newline='') as file:
+        csv_reader = csv.reader(file)
+        data = "\n".join(["\t".join(row) for row in csv_reader])
+    
+
+    max_values = {}
+    min_values = {}
+
+    # Dividir las líneas de datos en filas
+    rows = data.strip().split('\n')
+
+    for row in rows:
+        columns = row.split('\t')
+        letra = columns[0]
+        valor_columna_2 = int(columns[1])
+
+        if letra in max_values:
+            max_values[letra] = max(max_values[letra], valor_columna_2)
+        else:
+            max_values[letra] = valor_columna_2
+
+        if letra in min_values:
+            min_values[letra] = min(min_values[letra], valor_columna_2)
+        else:
+            min_values[letra] = valor_columna_2
+
+    # Convierte los diccionarios en una lista de tuplas
+    respuesta_05 = [(letra, max_values[letra], min_values[letra]) for letra in sorted(max_values)]
+
+    return respuesta_05
 
 
 def pregunta_06():
